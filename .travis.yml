@@ -9,6 +9,7 @@ php:
   - 8.0
 
 jobs:
+  fast_finish: true
   include:
     - php: 5.3
       dist: precise
