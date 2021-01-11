@@ -33,4 +33,4 @@ script:
 
 # Run coveralls.io code coverage report
 after_script:
-  - vendor/bin/coveralls -v
+  - vendor/bin/php-coveralls -v

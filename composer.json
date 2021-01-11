@@ -15,7 +15,7 @@
   "require-dev": {
     "monolog/monolog": "~1.0",
     "phpunit/phpunit": "~4.0",
-    "satooshi/php-coveralls": "dev-master"
+    "php-coveralls/php-coveralls": "^1.1|^2.4"
   },
   "autoload": {
     "psr-4": {
