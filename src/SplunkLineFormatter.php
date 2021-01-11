@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  * @copyright 2015 Vubeology, Inc.
  * @license MIT
@@ -15,18 +16,18 @@ use Monolog\Formatter\LineFormatter;
  */
 class SplunkLineFormatter extends LineFormatter
 {
-    const SPLUNK_FORMAT = "%datetime% %channel%.%level_name% L=%level% %message% %context% %extra%\n";
+    public const SPLUNK_FORMAT = "%datetime% %channel%.%level_name% L=%level% %message% %context% %extra%\n";
 
     protected $quoteReplacement;
 
     /**
-     * @param string $format                     The format of the message
-     * @param string $dateFormat                 The format of the timestamp: one supported by DateTime::format
-     * @param bool   $allowInlineLineBreaks      Whether to allow inline line breaks in log entries
-     * @param bool   $ignoreEmptyContextAndExtra
+     * @param string|null $format                     The format of the message
+     * @param string|null $dateFormat                 The format of the timestamp: one supported by DateTime::format
+     * @param bool        $allowInlineLineBreaks      Whether to allow inline line breaks in log entries
+     * @param bool        $ignoreEmptyContextAndExtra
+     * @param string      $quoteReplacement
      */
-    public function __construct($format = null, $dateFormat = null, $allowInlineLineBreaks = false, $ignoreEmptyContextAndExtra = false,
-    $quoteReplacement = '^')
+    public function __construct(?string $format = null, ?string $dateFormat = null, bool $allowInlineLineBreaks = false, bool $ignoreEmptyContextAndExtra = false, string $quoteReplacement = '^')
     {
         if($format === null) {
             $format = self::SPLUNK_FORMAT;
@@ -40,29 +41,25 @@ class SplunkLineFormatter extends LineFormatter
         parent::__construct($format, $dateFormat, $allowInlineLineBreaks, $ignoreEmptyContextAndExtra);
     }
 
-    public function setQuoteReplacement($quoteReplacement)
+    public function setQuoteReplacement($quoteReplacement): void
     {
         $this->quoteReplacement = $quoteReplacement;
     }
 
-    protected function jsonEncode($data)
+    protected function jsonEncode($data): string
     {
-        if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
-            return $this->toJson($data, true);
-        }
-
-        return str_replace('\\/', '/', @json_encode($data));
+        return $this->toJson($data, true);
     }
 
     /**
      * Public so we can run unit tests against it
      */
-    public function publicConvertToString($data)
+    public function publicConvertToString($data): string
     {
         return $this->convertToString($data);
     }
 
-    protected function convertToString($data)
+    protected function convertToString($data): string
     {
         if (null === $data || is_bool($data)) {
             return var_export($data, true);
@@ -74,7 +71,7 @@ class SplunkLineFormatter extends LineFormatter
 
         if (is_array($data)) {
 
-            $vals = array();
+            $vals = [];
 
             foreach ($data as $n => $v) {
                 if (null === $v || is_bool($v)) {
@@ -103,7 +100,7 @@ class SplunkLineFormatter extends LineFormatter
         return $this->jsonEncode($data);
     }
 
-    protected function toQuoteSafeString($string)
+    protected function toQuoteSafeString($string): string
     {
         return str_replace('"', $this->quoteReplacement, (string) $string);
     }
