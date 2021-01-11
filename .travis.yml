@@ -22,6 +22,8 @@ jobs:
       dist: xenial
     - php: 7.1
       dist: xenial
+  allow_failures:
+    - php: 8.0
 
 # Install dependencies before testing
 before_script:
