@@ -12,6 +12,9 @@
   "require": {
     "php": ">=7.2"
   },
+  "conflict": {
+    "monolog/monolog": "<2.0"
+  },
   "require-dev": {
     "monolog/monolog": "^2.0",
     "phpunit/phpunit": "^8.5",
