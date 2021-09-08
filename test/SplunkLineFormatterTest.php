@@ -1,17 +1,17 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use \Vube\Monolog\Formatter\SplunkLineFormatter;
 use \Monolog\Logger;
 use \Monolog\Handler\TestHandler;
 
-
-class SplunkLineFormatterTest extends \PHPUnit_Framework_TestCase
+class SplunkLineFormatterTest extends TestCase
 {
     private $log;
     private $handler;
     private $slf;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->slf = new SplunkLineFormatter();
 
@@ -153,7 +153,7 @@ class SplunkLineFormatterTest extends \PHPUnit_Framework_TestCase
         $context = array(
             'a' => 'A A',
         );
-        $this->log->addNotice('message here', $context);
+        $this->log->notice('message here', $context);
         $records = $this->handler->getRecords();
         $this->assertSame(1, count($records));
         $message = $records[0]['formatted'];
@@ -166,7 +166,7 @@ class SplunkLineFormatterTest extends \PHPUnit_Framework_TestCase
         $context = array(
             'a' => 'A A',
         );
-        $this->log->addWarning('message "with quotes"', $context);
+        $this->log->warning('message "with quotes"', $context);
         $records = $this->handler->getRecords();
         $this->assertSame(1, count($records));
         $message = $records[0]['formatted'];
@@ -181,7 +181,7 @@ class SplunkLineFormatterTest extends \PHPUnit_Framework_TestCase
                 'ca' => 'CA',
             ),
         );
-        $this->log->addWarning('message', $context);
+        $this->log->warning('message', $context);
         $records = $this->handler->getRecords();
         $this->assertSame(1, count($records));
         $message = $records[0]['formatted'];

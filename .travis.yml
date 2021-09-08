@@ -1,16 +1,17 @@
 # .travis.yml
 
 language: php
+dist: bionic
 php:
-  - 5.3
-  - 5.4
-  - 5.5
-  - 5.6
+  - 7.2
+  - 7.3
+  - 7.4
+  - 8.0
 
 # Install dependencies before testing
 before_script:
   - composer selfupdate
-  - composer install --dev
+  - composer install
 
 # Use our custom version of phpunit
 script:
@@ -19,4 +20,4 @@ script:
 
 # Run coveralls.io code coverage report
 after_script:
-  - vendor/bin/coveralls -v
+  - vendor/bin/php-coveralls -v
