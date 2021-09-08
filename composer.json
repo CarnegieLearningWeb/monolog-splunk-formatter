@@ -1,5 +1,5 @@
 {
-  "name": "vube/monolog-splunk-formatter",
+  "name": "carnegielearning/monolog-splunk-formatter",
   "description": "Splunk Line Formatter for Monolog",
   "license": "MIT",
   "authors": [
